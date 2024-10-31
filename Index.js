@@ -49,6 +49,20 @@ app.get("/books", async (req, res) => {
   }
 });
 
+app.get("/books/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const book = await Book.findById(id);
+    if (!book) {
+      return res.status(404).json({ error: "Book not found" });
+    }
+    return res.status(200).json(book);
+  } catch (err) {
+    console.error("Error fetching book:", err);
+    return res.status(500).json({ error: "Failed to fetch book" });
+  }
+});
+
 // Connect to MongoDB and start the server
 mongoose
   .connect(mongoDBURL)
