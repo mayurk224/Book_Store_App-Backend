@@ -84,6 +84,22 @@ app.put("/books/:id", async (req, res) => {
   }
 });
 
+app.delete("/books/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deletedBook = await Book.findByIdAndDelete(id);
+    if (!deletedBook) {
+      return res.status(404).json({ error: "Book not found" });
+    }
+    return res
+      .status(200)
+      .send({ message: "Book deleted", id: deletedBook.id });
+  } catch (err) {
+    console.error("Error deleting book:", err);
+    return res.status(500).json({ error: "Failed to delete book" });
+  }
+});
+
 // Connect to MongoDB and start the server
 mongoose
   .connect(mongoDBURL)
