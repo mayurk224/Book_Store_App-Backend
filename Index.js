@@ -63,6 +63,27 @@ app.get("/books/:id", async (req, res) => {
   }
 });
 
+app.put("/books/:id", async (req, res) => {
+  const { id } = req.params;
+  const { title, author, publishYear } = req.body;
+  try {
+    const updatedBook = await Book.findByIdAndUpdate(
+      id,
+      { title, author, publishYear },
+      { new: true }
+    );
+    if (!updatedBook) {
+      return res.status(404).json({ error: "Book not found" });
+    }
+    return res
+      .status(200)
+      .send({ message: "Book updated", id: updatedBook.id });
+  } catch (err) {
+    console.error("Error updating book:", err);
+    return res.status(500).json({ error: "Failed to update book" });
+  }
+});
+
 // Connect to MongoDB and start the server
 mongoose
   .connect(mongoDBURL)
