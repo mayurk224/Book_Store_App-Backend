@@ -14,15 +14,15 @@ const mongoDBURL = process.env.MONGODB_URL;
 app.use(express.json());
 // Middleware to handle CORS policy
 // option 1: allow all origins with default of cors(*)
-// app.use(cors());
+app.use(cors());
 // option 2: allow custom origins
-app.use(
-  cors({
-    origin: "http://localhost:3000", // replace with your frontend URL
-    methods: ["GET", "PUT", "DELETE", "POST"],
-    allowedHeaders: ["Content-Type"],
-  })
-);
+// app.use(
+//   cors({
+//     origin: "http://localhost:5173", // replace with your frontend URL
+//     methods: ["GET", "PUT", "DELETE", "POST"],
+//     allowedHeaders: ["Content-Type"],
+//   })
+// );
 
 // Welcome route
 app.get("/welcome", (req, res) => {

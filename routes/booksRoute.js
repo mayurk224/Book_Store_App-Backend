@@ -4,15 +4,20 @@ import { Book } from "../models/bookModel.js";
 const router = express.Router();
 
 router.post("/", async (req, res) => {
-  const { title, author, publishYear } = req.body;
+  const { title, author, publishYear, description } = req.body;
 
   // Validate request data
-  if (!title || !author || !publishYear) {
+  if (!title || !author || !publishYear || !description) {
     return res.status(400).json({ error: "All fields are required" });
   }
 
   try {
-    const newBook = await Book.create({ title, author, publishYear });
+    const newBook = await Book.create({
+      title,
+      author,
+      publishYear,
+      description,
+    });
     return res.status(201).json(newBook);
   } catch (err) {
     console.error("Error saving book:", err);
@@ -49,11 +54,11 @@ router.get("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const { title, author, publishYear } = req.body;
+  const { title, author, publishYear, description } = req.body;
   try {
     const updatedBook = await Book.findByIdAndUpdate(
       id,
-      { title, author, publishYear },
+      { title, author, publishYear, description },
       { new: true }
     );
     if (!updatedBook) {
