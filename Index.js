@@ -12,26 +12,17 @@ const mongoDBURL = process.env.MONGODB_URL;
 
 // Middleware
 app.use(express.json());
-// Middleware to handle CORS policy
-// option 1: allow all origins with default of cors(*)
-app.use(cors());
-// option 2: allow custom origins
-// app.use(
-//   cors({
-//     origin: "http://localhost:5173", // replace with your frontend URL
-//     methods: ["GET", "PUT", "DELETE", "POST"],
-//     allowedHeaders: ["Content-Type"],
-//   })
-// );
-
-// Welcome route
-app.get("/welcome", (req, res) => {
-  return res.status(200).send("Welcome");
-});
+// app.use(cors());
+app.use(
+  cors({
+    origin: process.env.ORIGIN_URL,
+    methods: ["GET", "PUT", "DELETE", "POST"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
 
 app.use("/books", booksRoute);
 
-// Connect to MongoDB and start the server
 mongoose
   .connect(mongoDBURL)
   .then(() => {

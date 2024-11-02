@@ -1,4 +1,7 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const bookSchema = mongoose.Schema(
   {
@@ -24,4 +27,6 @@ const bookSchema = mongoose.Schema(
   }
 );
 
-export const Book = mongoose.model("book", bookSchema);
+const collectionName = process.env.MONGODB_COLLECTION_NAME;
+
+export const Book = mongoose.model("book", bookSchema, collectionName);
