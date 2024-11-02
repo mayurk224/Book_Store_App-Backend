@@ -6,7 +6,6 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   const { title, author, publishYear, description } = req.body;
 
-  // Validate request data
   if (!title || !author || !publishYear || !description) {
     return res.status(400).json({ error: "All fields are required" });
   }

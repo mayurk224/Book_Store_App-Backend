@@ -9,13 +9,14 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 const mongoDBURL = process.env.MONGODB_URL;
+const originUrl = process.env.ORIGIN_URL;
 
 // Middleware
 app.use(express.json());
 // app.use(cors());
 app.use(
   cors({
-    origin: process.env.ORIGIN_URL,
+    origin: originUrl,
     methods: ["GET", "PUT", "DELETE", "POST"],
     allowedHeaders: ["Content-Type"],
   })
